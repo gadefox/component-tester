@@ -1,0 +1,8 @@
+#!/bin/rc
+
+dir = `{ pwd }
+out = $dir/out
+freq = `{ cat $dir/freq }
+mcu  = `{ cat $dir/mcu }
+
+simavr -m $mcu -g -f $freq $out/prog.elf

@@ -1,0 +1,6 @@
+#!/bin/rc
+
+dir = `{ pwd }
+out = $dir/out
+
+avr-gdb --command=$dir/gdb-commands $out/prog.elf

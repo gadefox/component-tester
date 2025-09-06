@@ -1,0 +1,18 @@
+#!/bin/rc
+
+dir = `{ pwd }
+src = $dir/src
+out = $dir/out
+freq = `{ cat $dir/freq }
+mcu = `{ cat $dir/mcu }
+def = `{ cat $dir/def }
+
+mkdir -p $dir/out
+
+avr-gcc -mmcu=$mcu -S -D$def -DCPU_FREQ=$freq -DF_CPU=$freq $src/main.c -o $out/main.asm
+
+avr-gcc -mmcu=$mcu -g -O0 -c -D$def -DCPU_FREQ=$freq -DF_CPU=$freq $src/main.c -o $out/main.o
+avr-gcc -mmcu=$mcu -g -O0 -c -D$def -DCPU_FREQ=$freq -DF_CPU=$freq $src/wait.S -o $out/wait.o
+
+avr-gcc -mmcu=$mcu -g -O0 $out/main.o $out/wait.o -o $out/prog.elf
+avr-objdump -d $out/prog.elf > $out/prog.asm
