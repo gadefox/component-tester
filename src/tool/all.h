@@ -1,0 +1,36 @@
+/* AUTO-GENERATED FILE - DO NOT EDIT */
+
+/*
+ *  all tools
+ */
+
+#include "bh1750.h"
+#include "cap.h"
+#include "continuity.h"
+#include "counter.h"
+#include "dhtxx.h"
+#include "diode.h"
+#include "encoder.h"
+#include "event_counter.h"
+#include "flashlight.h"
+#include "freq_counter.h"
+#include "ina226.h"
+#include "ir.h"
+#include "ir_rx.h"
+#include "ir_tx.h"
+#include "lc_meter.h"
+#include "max31855.h"
+#include "max6675.h"
+#include "max_thermo.h"
+#include "meter_5vdc.h"
+#include "monitor.h"
+#include "onewire.h"
+#include "opto_coupler.h"
+#include "pinout.h"
+#include "probe.h"
+#include "pwm_plus.h"
+#include "pwm_simple.h"
+#include "ring_tester.h"
+#include "servo.h"
+#include "square_wave.h"
+#include "zener.h"

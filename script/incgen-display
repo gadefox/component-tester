@@ -1,0 +1,25 @@
+#!/bin/sh
+
+{
+  echo "/* AUTO-GENERATED FILE - DO NOT EDIT */"
+  echo
+  echo "#include \"func.h\""
+  echo
+  echo "/*"
+  echo " *  all displays"
+  echo " */"
+  echo
+
+  for file in ../src/display/*.h; do
+    filename=$(basename "$file")
+    [ "$filename" = "all.h" ] && continue
+    [ "$filename" = "colors.h" ] && continue
+    [ "$filename" = "func.h" ] && continue
+    echo "#include \"$filename\""
+  done
+
+  echo
+  echo "#ifdef LCD_COLOR"
+  echo "#include \"colors.h\"                     /* color definitions */"
+  echo "#endif"
+} > ../src/display/all.h
