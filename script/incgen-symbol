@@ -1,0 +1,16 @@
+#!/bin/sh
+
+{
+  echo "/* AUTO-GENERATED FILE - DO NOT EDIT */"
+  echo
+  echo "/*"
+  echo " *  all symbols"
+  echo " */"
+  echo
+
+  for file in ../src/symbol/*.h; do
+    filename=$(basename "$file")
+    [ "$filename" = "all.h" ] && continue
+    echo "#include \"$filename\""
+  done
+} > ../src/symbol/all.h
