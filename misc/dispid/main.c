@@ -93,15 +93,14 @@
 #define DISPH  160
 #endif /* ROTATE */
 
-uint16_t colors1[8] = {
-  RGB(255, 0,   0),
-  RGB(0,   255, 0),
-  RGB(0,   0,   255),
-  RGB(255, 255, 0),
-  RGB(255, 0,   255),
-  RGB(0,   255, 255),
-  RGB(255, 255, 255),
-  RGB(0,   0,   0),
+uint16_t colors[] = {
+  RGB(255, 0,   0),   /* Red */
+  RGB(0,   255, 0),   /* Green */
+  RGB(0,   0,   255), /* Blue */
+  RGB(255, 255, 0),   /* Yellow */
+  RGB(255, 0,   255), /* Magenta */
+  RGB(0,   255, 255), /* Cyan */
+  RGB(255, 255, 255)  /* White */
 };
 
 #define st7735_clearscr()  st7735_fillregion(0, 0, DISPW, DISPH, 0)  /* black */
@@ -343,15 +342,19 @@ void st7735_memaccess(uint8_t mode) {
 
 void st7735_init(void) {
   st7735_sleepout(1);
+  delay(120);
   st7735_colormode(COLMODE_16);
+  delay(500);
 #if defined(ROTATE)
-  st7735_memaccess(MADCTL_BGR | MADCTL_MV | MADCTL_MX);
+//  st7735_memaccess(MADCTL_BGR | MADCTL_MV | MADCTL_MX);
+  st7735_memaccess(MADCTL_BGR | MADCTL_MV | MADCTL_MY);
 #else
   st7735_memaccess(MADCTL_BGR);
 #endif
   st7735_invertmode(1);
   st7735_clearscr();
   st7735_disppower(1);
+  delay(500);
 }
 
 /*
@@ -438,17 +441,19 @@ uint32_t reg_read(const char* name, uint8_t reg) {
 /*
  * misc
  */
+#define DELAY  2000
+
 void drawcolors(uint16_t* colors, uint8_t count) {
-#define DELAY  10000
-
   uint8_t x = 0, y = 0;
-  uint8_t width = sqrt(count >> 1);
+  uint8_t width = sqrt(count >> 1) + 1;
 
+  width =
 #ifdef ROTATE
-  width = DISPH / count;
+    DISPH
 #else
-  width = DISPW / count;
+    DISPW
 #endif /* ROTATE */
+    / width;
 
   while (count-- != 0) {
     st7735_fillregion(x, y, width, width, *colors++);
@@ -463,8 +468,6 @@ void drawcolors(uint16_t* colors, uint8_t count) {
 }
 
 int main(void) {
-  uint8_t id1, id2, id3;
-
 #ifdef __LGT8F__
   /* set clock prescaler to 1 */
   CLKPR = BV(WCE);
@@ -475,12 +478,15 @@ int main(void) {
   uart_init();
   st7735_hardreset();
 
-#if 0
+#if 1
   st7735_init();
-  segm_test(colors1[1]);
-  delay(DELAY);
-  drawcolors(colors1, COUNT(colors1));
+//  segm_test(colors[1]);
+//  delay(DELAY);
+  drawcolors(colors, COUNT(colors));
+//  st7735_fillregion(0, 0, 40, 40, colors[1]);
 #else
+  uint8_t id1, id2, id3;
+
   reg_read("RDDPM",     RDDPM);
   reg_read("RDDMADCTL", RDDMADCTL);
   reg_read("RDDCOLMOD", RDDCOLMOD);
@@ -493,9 +499,9 @@ int main(void) {
   id3 = reg_read("RDID3", RDID3);
 
   st7735_init();
-  segm_drawhex(0, 0, colors1[1], id1, 2);
-  segm_drawhex(0, SEGMH2, colors1[3], id2, 2);
-  segm_drawhex(0, SEGMH2 * 2, colors1[5], id3, 2);
+  segm_drawhex(0, 0, colors[1], id1, 2);
+  segm_drawhex(0, SEGMH2, colors[3], id2, 2);
+  segm_drawhex(0, SEGMH2 * 2, colors[5], id3, 2);
 #endif
 
 /*  
