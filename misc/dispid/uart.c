@@ -3,6 +3,7 @@
 #include "common.h"
 #include "uart.h"
 
+
 /*
  * UART
  */
@@ -70,6 +71,3 @@ void uart_uint16(uint16_t value) {
   while (i != 0)
     uart_ch(buf[--i]);
 }
-
-
-

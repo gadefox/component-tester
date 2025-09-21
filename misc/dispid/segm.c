@@ -2,6 +2,7 @@
 #include "segm.h"
 #include "st7735.h"
 
+
 /*
  *     a
  *    ---
@@ -33,10 +34,6 @@ const uint8_t digits[] = {
   0b0110111  /* h */
 };
 
-#define SEGMW   8
-#define SEGMH   14
-#define SEGMW2  (SEGMW + 2)
-#define SEGMH2  (SEGMH + 2)
 
 /*
  * segments

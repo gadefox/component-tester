@@ -3,6 +3,7 @@
 #include "spi.h"
 #include "common.h"
 
+
 /*
  * SPI
  */
@@ -12,6 +13,7 @@
 #else
 #define spi_bitbang()  { SB(PORTB, SCK); CB(PORTB, SCK); }
 #endif
+
 
 uint32_t spi_read(uint8_t bytes, uint8_t dummy) {
   uint32_t ret = 0;

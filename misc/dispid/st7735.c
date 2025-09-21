@@ -5,17 +5,12 @@
 #include "st7735.h"
 #include "spi.h"
 
+
 /*
  * ST7735
  */
 
 #define SWRESET    0x01
-#define RDDPM      0x0A
-#define RDDMADCTL  0x0B
-#define RDDCOLMOD  0x0C
-#define RDDIM      0x0D
-#define RDDSM      0x0E
-#define RDDSDR     0x0F
 #define SLPIN      0x10
 #define SLPOUT     0x11
 #define INVOFF     0x20
@@ -27,16 +22,10 @@
 #define RAMWR      0x2C
 #define MADCTL     0x36
 #define COLMOD     0x3A
-#define RDID1      0xDA
-#define RDID2      0xDB
-#define RDID3      0xDC
 
 #define COLMODE_12  0x03
 #define COLMODE_16  0x05
 #define COLMODE_18  0x06
-
-/* (0b) bbbbbggggggrrrrr */
-#define RGB(r, g, b)  ((((r) & 0xF8) << 8) | (((g) & 0xFC) << 3) | (((b) & 0xF8) >> 3))
 
 #define MADCTL_MH   0b00000100
 #define MADCTL_BGR  0b00001000
@@ -44,20 +33,6 @@
 #define MADCTL_MV   0b00100000
 #define MADCTL_MX   0b01000000
 #define MADCTL_MY   0b10000000
-
-#define ROTATE 1
-
-#if ROTATE == 1
-#define DISPX  1
-#define DISPY  26
-#define DISPW  160
-#define DISPH  80
-#else
-#define DISPX  26
-#define DISPY  1
-#define DISPW  80
-#define DISPH  160
-#endif /* ROTATE */
 
 const uint16_t colors[] = {
   RGB(255, 0,   0),   /* Red */
@@ -69,7 +44,6 @@ const uint16_t colors[] = {
   RGB(255, 255, 255)  /* White */
 };
 
-#define st7735_clearscr()  st7735_fillregion(0, 0, DISPW, DISPH, 0)  /* black */
 
 /*
  * display fn(s)

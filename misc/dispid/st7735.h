@@ -37,6 +37,16 @@
 #define DISPH  160
 #endif
 
+#define RDDPM      0x0A
+#define RDDMADCTL  0x0B
+#define RDDCOLMOD  0x0C
+#define RDDIM      0x0D
+#define RDDSM      0x0E
+#define RDDSDR     0x0F
+#define RDID1      0xDA
+#define RDID2      0xDB
+#define RDID3      0xDC
+
 /*
  * Predefined colors
  */

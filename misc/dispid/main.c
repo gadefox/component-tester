@@ -12,6 +12,9 @@
 #include "st7735.h"
 #include "uart.h"
 
+
+#define DELAY  2000
+
 uint32_t reg_read(const char* name, uint8_t reg) {
   uint32_t value = st7735_readreg(reg);
   uart_str(name);
@@ -20,8 +23,6 @@ uint32_t reg_read(const char* name, uint8_t reg) {
   uart_nl();
   return value;
 }
-
-#define DELAY  2000
 
 void drawcolors(uint16_t* colors, uint8_t count) {
   uint8_t x = 0, y = 0;
@@ -58,7 +59,7 @@ int main(void) {
   uart_init();
   st7735_hardreset();
 
-#if 1
+#if 0
   st7735_init();
 //  segm_test(colors[1]);
 //  delay(DELAY);
