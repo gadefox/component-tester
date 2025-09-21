@@ -1,0 +1,14 @@
+#!/bin/rc
+
+dir = `(dirname $0)
+out = $dir/out
+mkdir -p $out
+
+freq = `(cat $dir/freq)
+echo 'freq: '$freq' MHz'
+mcu = `(cat $dir/mcu)
+echo 'mcu:  '$mcu
+
+avr-gcc -c -g -Os -Wall -mmcu=atmega328p -DF_CPU=$freq'000000' -D__$mcu'__' $dir/main.c -o $out/main.o
+avr-gcc -mmcu=atmega328p -Os -Wall -flto -Wl,--gc-sections $out/main.o -o $out/main.elf
+avr-objcopy -O ihex -R .eeprom $out/main.elf $out/main.hex
