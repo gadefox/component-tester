@@ -10,5 +10,10 @@ mcu = `(cat $dir/mcu)
 echo 'mcu:  '$mcu
 
 avr-gcc -c -g -Os -Wall -mmcu=atmega328p -DF_CPU=$freq'000000' -D__$mcu'__' $dir/main.c -o $out/main.o
-avr-gcc -mmcu=atmega328p -Os -Wall -flto -Wl,--gc-sections $out/main.o -o $out/main.elf
-avr-objcopy -O ihex -R .eeprom $out/main.elf $out/main.hex
+avr-gcc -c -g -Os -Wall -mmcu=atmega328p -DF_CPU=$freq'000000' -D__$mcu'__' $dir/segm.c -o $out/segm.o
+avr-gcc -c -g -Os -Wall -mmcu=atmega328p -DF_CPU=$freq'000000' -D__$mcu'__' $dir/spi.c -o $out/spi.o
+avr-gcc -c -g -Os -Wall -mmcu=atmega328p -DF_CPU=$freq'000000' -D__$mcu'__' $dir/st7735.c -o $out/st7735.o
+avr-gcc -c -g -Os -Wall -mmcu=atmega328p -DF_CPU=$freq'000000' -D__$mcu'__' $dir/uart.c -o $out/uart.o
+
+avr-gcc -mmcu=atmega328p -Os -Wall -flto -Wl,--gc-sections $out/main.o $out/segm.o $out/spi.o $out/st7735.o $out/uart.o -o $out/getid.elf
+avr-objcopy -O ihex -R .eeprom $out/getid.elf $out/getid.hex
