@@ -15,8 +15,18 @@
 
 #define DELAY  2000
 
+const uint16_t colors[] = {
+  RGB(255, 0,   0),   /* Red */
+  RGB(0,   255, 0),   /* Green */
+  RGB(0,   0,   255), /* Blue */
+  RGB(255, 255, 0),   /* Yellow */
+  RGB(255, 0,   255), /* Magenta */
+  RGB(0,   255, 255), /* Cyan */
+  RGB(255, 255, 255)  /* White */
+};
+
 uint32_t reg_read(const char* name, uint8_t reg) {
-  uint32_t value = st7735_readreg(reg);
+  uint32_t value = st7735_readreg(reg, 1, 0);
   uart_str(name);
   uart_str(": 0x");
   uart_hex(value, 2);

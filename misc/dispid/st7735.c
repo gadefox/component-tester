@@ -34,16 +34,6 @@
 #define MADCTL_MX   0b01000000
 #define MADCTL_MY   0b10000000
 
-const uint16_t colors[] = {
-  RGB(255, 0,   0),   /* Red */
-  RGB(0,   255, 0),   /* Green */
-  RGB(0,   0,   255), /* Blue */
-  RGB(255, 255, 0),   /* Yellow */
-  RGB(255, 0,   255), /* Magenta */
-  RGB(0,   255, 255), /* Cyan */
-  RGB(255, 255, 255)  /* White */
-};
-
 
 /*
  * display fn(s)
@@ -106,11 +96,8 @@ void st7735_memaccess(uint8_t mode) {
 
 void st7735_init(void) {
   st7735_sleepout(1);
-  delay(120);
   st7735_colormode(COLMODE_16);
-  delay(500);
 #if defined(ROTATE)
-//  st7735_memaccess(MADCTL_BGR | MADCTL_MV | MADCTL_MX);
   st7735_memaccess(MADCTL_BGR | MADCTL_MV | MADCTL_MY);
 #else
   st7735_memaccess(MADCTL_BGR);
@@ -118,14 +105,13 @@ void st7735_init(void) {
   st7735_invertmode(1);
   st7735_clearscr();
   st7735_disppower(1);
-  delay(500);
 }
 
 /*
  * registers
  */
 
-uint32_t st7735_readreg(uint8_t reg) {
+uint32_t st7735_readreg(uint8_t reg, uint8_t bytes, uint8_t dummy) {
   st7735_softreset();
-  return spi_readreg(reg, 1, 0);
+  return spi_readreg(reg, bytes, dummy);
 }

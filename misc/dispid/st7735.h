@@ -48,11 +48,6 @@
 #define RDID3      0xDC
 
 /*
- * Predefined colors
- */
-extern const uint16_t colors[];
-
-/*
  * Helper macros
  */
 #define st7735_clearscr()  st7735_fillregion(0, 0, DISPW, DISPH, 0)
@@ -70,6 +65,6 @@ void st7735_disppower(uint8_t on);
 void st7735_invertmode(uint8_t on);
 void st7735_memaccess(uint8_t mode);
 void st7735_init(void);
-uint32_t st7735_readreg(uint8_t reg);
+uint32_t st7735_readreg(uint8_t reg, uint8_t bytes, uint8_t dummy);
 
 #endif /* ST7735_H */
