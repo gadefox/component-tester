@@ -3,4 +3,4 @@
 dir = `(dirname $0)
 out = $dir/out
 
-avrdude -D -c arduino -p lgt8f328p -P /dev/ttyACM0 -b 57600 -U flash:w:$out/main.hex:i
+avrdude -D -c arduino -p lgt8f328p -P /dev/ttyACM0 -b 57600 -U flash:w:$out/getid.hex:i

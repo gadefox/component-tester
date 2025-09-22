@@ -34,7 +34,7 @@ uint32_t reg_read(const char* name, uint8_t reg) {
   return value;
 }
 
-void drawcolors(uint16_t* colors, uint8_t count) {
+void drawcolors(const uint16_t* colors, uint8_t count) {
   uint8_t x = 0, y = 0;
   uint8_t width = sqrt(count >> 1) + 1;
 
@@ -69,12 +69,12 @@ int main(void) {
   uart_init();
   st7735_hardreset();
 
-#if 0
+#if 1
   st7735_init();
 //  segm_test(colors[1]);
 //  delay(DELAY);
-//  drawcolors(colors, COUNT(colors));
-  st7735_fillregion(0, 0, 40, 40, colors[1]);
+  drawcolors(colors, COUNT(colors));
+//  st7735_fillregion(0, 0, 40, 40, colors[1]);
 #else
   uint8_t id1, id2, id3;
 
