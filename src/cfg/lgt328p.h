@@ -239,16 +239,18 @@
 #define ADC_REF_VCC           (1 << REFS0)
 
 /* ADC reference selection: internal 1.1V bandgap */
-#define ADC_REF_BANDGAP       ((1 << REFS1) | (1 << REFS0))
+#define ADC_REF_BANDGAP       0
+#define ADC_REF_BANDGAP2      (1 << REFS2)
 
 /* ADC reference selection: filter mask for register bits */
 #define ADC_REF_MASK          ((1 << REFS1) | (1 << REFS0))
+#define ADC_REF_MASK2         (1 << REFS2)
 
 /* ADC MUX channel: internal 1.1V bandgap reference */
-#define ADC_CHAN_BANDGAP      0x0e      /* 1110 */
+#define ADC_CHAN_BANDGAP      ((1 << CHMUX3) | (1 << CHMUX2) | (1 << CHMUX1))  /* 4/5 VDO */
 
 /* ADC MUX channel: filter mask for register bits */
-#define ADC_CHAN_MASK         0b00001111     /* MUX0-3 */
+#define ADC_CHAN_MASK         ((1 << CHMUX4) | (1 << CHMUX3) | (1 << CHMUX2) | (1 << CHMUX1) | (1 << CHMUX0))
 
 
 /* ************************************************************************

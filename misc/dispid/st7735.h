@@ -1,8 +1,6 @@
 #ifndef ST7735_H
 #define ST7735_H
 
-#include <stdint.h>
-
 #define COLMODE_12  0x03
 #define COLMODE_16  0x05
 #define COLMODE_18  0x06

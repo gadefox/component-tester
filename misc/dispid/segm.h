@@ -1,8 +1,6 @@
 #ifndef SEGM_H
 #define SEGM_H
 
-#include <stdint.h>
-
 #define SEGMW   8
 #define SEGMH   14
 #define SEGMW2  (SEGMW + 2)

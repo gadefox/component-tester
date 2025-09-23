@@ -1,8 +1,6 @@
 #ifndef SPI_H
 #define SPI_H
 
-#include <stdint.h>
-
 #define SCK   BV(PB5)
 #define MOSI  BV(PB3)
 #define DC    BV(PB1)

@@ -61,6 +61,7 @@ uint16_t ReadU(uint8_t Channel)
   /* prepare bitfield for register: start with AVcc as voltage reference */
   Channel &= ADC_CHAN_MASK;        /* filter reg bits for MUX channel */
   Channel |= ADC_REF_VCC;          /* add bits for voltage reference: AVcc */
+  toto LGT clear 2bit REFERENCIE REFS2!!!!
 
 sample:
 
@@ -108,6 +109,7 @@ sample:
 
   while (Counter < Cfg.Samples)    /* take samples */
   {
+    TODO  pridaj kod pre LGT (2 merania + priemerovanie + odratanie >> 7) pre LGT
     ADCSRA |= (1 << ADSC);         /* start conversion */
     while (ADCSRA & (1 << ADSC));  /* wait until conversion is done */
 
@@ -116,6 +118,7 @@ sample:
     /* auto-switch voltage reference for low readings */
     if (Counter == 4)                   /* 5 samples */
     {
+      todo LGT!!!!!
       if ((uint16_t)Value < 1024)       /* < 1V (5V / 5 samples) */
       {
         if (Ref != ADC_REF_BANDGAP)     /* bandgap ref not selected */
@@ -149,6 +152,7 @@ sample:
   Value *= U;                      /* ADC readings * U_ref */
 //  Value += 511 * Cfg.Samples;      /* automagic rounding */
   Value /= 1024;                   /* / 1024 for 10bit ADC */
+  todo LGT!!!!
 
   /* de-sample to get average voltage */
   Value /= Cfg.Samples;
