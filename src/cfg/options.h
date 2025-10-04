@@ -1563,8 +1563,8 @@
  *  - uncomment either SPI_BITBANG or SPI_HARDWARE to enable
  */
 
-#define SPI_BITBANG                /* bit-bang SPI */
-//#define SPI_HARDWARE               /* hardware SPI */
+//#define SPI_BITBANG                /* bit-bang SPI */
+#define SPI_HARDWARE               /* hardware SPI */
 //#define SPI_RW                     /* enable SPI read support */
 //#define SPI_SLOWDOWN               /* slow down bit-bang SPI */
 

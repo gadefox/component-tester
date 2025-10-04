@@ -129,7 +129,7 @@ uint16_t SmallResistor(uint8_t ZeroFlag)
     /* convert ADC reading into voltage (sum of samples) */
     Value *= Cfg.Bandgap;          /* * U_bandgap */
     Value /= 1024;                 /* / 1024 for 10bit ADC */
-    todo!!!! LGT
+//    todo!!!! LGT
 
     /* loop control */
     if (Mode & MODE_HIGH)          /* probe #1 / Rl */

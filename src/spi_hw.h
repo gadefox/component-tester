@@ -25,8 +25,8 @@
 
 #define SPI_CLOCK_RX          (SPI_CLOCK_R0 | SPI_CLOCK_R1)
 
-extern void SPI_Clock(void);
-extern void SPI_Setup(void);
+extern void SPI_Clock(uint8_t Rate);
+extern void SPI_Setup(uint8_t Rate);
 extern void SPI_Write_Byte(uint8_t Byte);
 
 #ifdef SPI_RW

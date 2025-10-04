@@ -7,6 +7,7 @@
 
 PROJECT := ComponentTester
 
+DEBUG = yes
 
 # Language of user interface.
 # Available languages:
@@ -292,7 +293,10 @@ else
 endif
 
 # linker flags
-LDFLAGS = -mmcu=${MCU} -Wl,--strip-all,-Map=${BIN_DIR}/${NAME}.map
+LDFLAGS = -mmcu=${MCU} -Wl,-Map=${BIN_DIR}/${NAME}.map
+ifeq (${DEBUG},no)
+  LDFLAGS += -Wl,--strip-all
+endif
 ifeq (${OPTIMIZE_VECTORS},yes)
   LDFLAGS += -nostartfiles
 endif

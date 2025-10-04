@@ -5,14 +5,23 @@
 #define COLMODE_16  0x05
 #define COLMODE_18  0x06
 
+#define COLMODE  COLMODE_16
+
 /* (0b) bbbbbggggggrrrrr */
+#if COLMODE == COLMODE_18
+#define RGB(r, g, b)  (((uint32_t)(r) << 16) | ((g) << 8) | (b))
+#define RED(col)      ((col) >> 16)
+#define GREEN(col)    (((col) >> 8) & 0xFF)
+#define BLUE(col)     ((col) & 0xFF)
+#else
 #define RGB(r, g, b)  ((((r) & 0xF8) << 8) | (((g) & 0xFC) << 3) | (((b) & 0xF8) >> 3))
+#endif
 
 /*
  * MADCTL bits
  */
 #define MADCTL_MH   0b00000100
-#define MADCTL_BGR  0b00001000
+#define MADCTL_RGB  0b00001000
 #define MADCTL_ML   0b00010000
 #define MADCTL_MV   0b00100000
 #define MADCTL_MX   0b01000000
@@ -48,13 +57,18 @@
 /*
  * Helper macros
  */
+#if COLMODE == COLMODE_18
+#define st7735_clearscr()  st7735_fillrgb(0, 0, DISPW, DISPH, 0, 0, 0)
+#else
 #define st7735_clearscr()  st7735_fillregion(0, 0, DISPW, DISPH, 0)
+#endif
 
 /*
  * API
  */
 void st7735_setregion(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
 void st7735_fillregion(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
+void st7735_fillrgb(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t r, uint8_t g, uint8_t b);
 void st7735_hardreset(void);
 void st7735_softreset(void);
 void st7735_sleepout(uint8_t out);
@@ -62,6 +76,10 @@ void st7735_colormode(uint8_t mode);
 void st7735_disppower(uint8_t on);
 void st7735_invertmode(uint8_t on);
 void st7735_memaccess(uint8_t mode);
+void st7735_dispmode(uint8_t norm);
+void st7735_partarea(uint8_t psl, uint8_t pel);
+void st7735_scroll(uint8_t addr);
+void st7735_idlemode(uint8_t on);
 void st7735_init(void);
 uint32_t st7735_readreg(uint8_t reg, uint8_t bytes, uint8_t dummy);
 

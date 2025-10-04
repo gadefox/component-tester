@@ -15,14 +15,14 @@
 
 #define DELAY  2000
 
-const uint16_t colors[] = {
-  RGB(255, 0,   0),   /* Red */
+const uint32_t colors[] = {
   RGB(0,   255, 0),   /* Green */
-  RGB(0,   0,   255), /* Blue */
   RGB(255, 255, 0),   /* Yellow */
-  RGB(255, 0,   255), /* Magenta */
   RGB(0,   255, 255), /* Cyan */
-  RGB(255, 255, 255)  /* White */
+  RGB(255, 255, 255), /* White */
+  RGB(255, 0,   0),   /* Red */
+  RGB(0,   0,   255), /* Blue */
+  RGB(255, 0,   255)  /* Magenta */
 };
 
 uint32_t reg_read(const char* name, uint8_t reg) {
@@ -34,7 +34,10 @@ uint32_t reg_read(const char* name, uint8_t reg) {
   return value;
 }
 
-void drawcolors(const uint16_t* colors, uint8_t count) {
+void drawcolors(const uint32_t* colors, uint8_t count) {
+#if COLMODE == COLMODE_18
+  uint32_t col;
+#endif
   uint8_t x = 0, y = 0;
   uint8_t width = sqrt(count >> 1) + 1;
 
@@ -47,7 +50,18 @@ void drawcolors(const uint16_t* colors, uint8_t count) {
     / width;
 
   while (count-- != 0) {
+#if COLMODE == COLMODE_18
+    col = *colors++;
+    uart_uint16(RED(col));
+    uart_nl();
+    uart_uint16(GREEN(col));
+    uart_nl();
+    uart_uint16(BLUE(col));
+    uart_nl();
+    st7735_fillrgb(x, y, width, width, RED(col), GREEN(col), BLUE(col));
+#else
     st7735_fillregion(x, y, width, width, *colors++);
+#endif
 
     x += width;
     if (x + width > DISPW) {
@@ -71,10 +85,9 @@ int main(void) {
 
 #if 1
   st7735_init();
-//  segm_test(colors[1]);
+  segm_test(colors, COUNT(colors));
 //  delay(DELAY);
-  drawcolors(colors, COUNT(colors));
-//  st7735_fillregion(0, 0, 40, 40, colors[1]);
+//  drawcolors(colors, COUNT(colors));
 #else
   uint8_t id1, id2, id3;
 

@@ -31,7 +31,7 @@ const uint8_t digits[] = {
   0b0111101, /* d */
   0b1001111, /* E */
   0b1000111, /* F */
-  0b0110111  /* h */
+  0b0010111  /* h */
 };
 
 
@@ -82,11 +82,11 @@ void segm_drawhex(uint8_t x, uint8_t y, uint16_t color, uint32_t value, uint8_t 
   segm_draw(x, y, color, 16);
 }
 
-void segm_test(uint16_t color) {
+void segm_test(const uint32_t* colors, uint32_t count) {
   uint8_t x = 0, y = 0;
 
   for (uint8_t i = 0; i < 80; i++) {
-    segm_draw(x, y, color, i % COUNT(digits));
+    segm_draw(x, y, colors[i % count], i % COUNT(digits));
 
     x += SEGMW2;
     if (x > DISPW - SEGMW2) {

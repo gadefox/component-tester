@@ -626,14 +626,14 @@ void GetGateThreshold(uint8_t Type)
       Ugs += ADCW;                        /* Ugs = U_g */
     else                                /* p-channel */
       Ugs -= (1023 - ADCW);               /* Ugs = - (Vcc - U_g) */
-      todo LGT!!!!!
+//      todo LGT!!!!!
   }
 
   /* calculate V_th */
   Ugs /= 10;                     /* average of 10 samples */
   Ugs *= Cfg.Vcc;                /* convert to voltage */
   Ugs /= 1024;                   /* using 10 bit resolution */
-  todo LGT!!!!!
+//  todo LGT!!!!!
 
   /* save data */
   Semi.U_2 = (int16_t)Ugs;       /* gate threshold voltage (in mV) */

@@ -61,19 +61,16 @@
 #define LCD_DC           PD3            /* port pin used for D/CX */
 #define LCD_SCL          PD2            /* port pin used for SCL */
 #define LCD_SDA          PD1            /* port pin used for SDA */
+#define LCD_SS           0              /* N/A */
 
 /* SPI bus */
-#if 0
-#define SPI_BITBANG                     /* bit-bang SPI */
+#define SPI_HARDWARE                    /* hardware SPI */
+//#define SPI_BITBANG                     /* bit-bang SPI */
 #define SPI_PORT         LCD_PORT       /* SPI port data register */
 #define SPI_DDR          LCD_DDR        /* SPI port data direction register */
 #define SPI_SCK          LCD_SCL        /* port pin used for SCK */
 #define SPI_MOSI         LCD_SDA        /* port pin used for MOSI */
-#endif
-
-#if 1
-#define SPI_HARDWARE                    /* hardware SPI */
-#endif
+#define SPI_SS           LCD_SS         /* port pin used for SS */
 
 
 /* ************************************************************************

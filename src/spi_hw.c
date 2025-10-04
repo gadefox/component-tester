@@ -82,7 +82,7 @@ void SPI_Clock(uint8_t Rate)
  *  - lines are set up automatically
  */
 
-void SPI_Setup(void)
+void SPI_Setup(uint8_t Rate)
 {
   uint8_t           Bits;     /* register bits */
 
@@ -110,7 +110,7 @@ void SPI_Setup(void)
   SPCR = (1 << SPE) | (1 << MSTR);
 
   /* set clock rate */
-  SPI_Clock();
+  SPI_Clock(Rate);
 
   /* clear SPI interrupt flag, just in case */
   Bits = SPSR;           /* read flag */

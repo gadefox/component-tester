@@ -192,7 +192,7 @@ void LCD_BusSetup(void)
 void LCD_Cmd(uint8_t Cmd)
 {
   /* indicate command mode */
-  LCD_PORT &= ~(1 << LCD_A0);      /* set A0 low */
+  LCD_PORT &= ~(1 << LCD_DC);    /* set A0 low */
 
   /* select chip, if pin available */
 #ifdef LCD_CS
@@ -218,7 +218,7 @@ void LCD_Cmd(uint8_t Cmd)
 void LCD_Data(uint8_t Data)
 {
   /* indicate data mode */
-  LCD_PORT |= (1 << LCD_A0);       /* set A0 high */
+  LCD_PORT |= (1 << LCD_DC);     /* set A0 high */
 
   /* select chip, if pin available */
 #ifdef LCD_CS

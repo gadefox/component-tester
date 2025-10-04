@@ -68,6 +68,14 @@ void spi_write16x(uint16_t value, uint16_t count) {
     spi_write16(value);
 }
 
+void spi_writergbx(uint8_t r, uint8_t g, uint8_t b, uint16_t count) {
+  while (count-- != 0) {
+    spi_write8(r, 1);
+    spi_write8(g, 1);
+    spi_write8(b, 1);
+  }
+}
+
 uint32_t spi_readreg(uint8_t reg, uint8_t bytes, uint8_t dummy) {
   spi_write8(reg, 0);
   return spi_read(bytes, dummy);
