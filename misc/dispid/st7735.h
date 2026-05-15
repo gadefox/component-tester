@@ -1,0 +1,86 @@
+#ifndef ST7735_H
+#define ST7735_H
+
+#define COLMODE_12  0x03
+#define COLMODE_16  0x05
+#define COLMODE_18  0x06
+
+#define COLMODE  COLMODE_16
+
+/* (0b) bbbbbggggggrrrrr */
+#if COLMODE == COLMODE_18
+#define RGB(r, g, b)  (((uint32_t)(r) << 16) | ((g) << 8) | (b))
+#define RED(col)      ((col) >> 16)
+#define GREEN(col)    (((col) >> 8) & 0xFF)
+#define BLUE(col)     ((col) & 0xFF)
+#else
+#define RGB(r, g, b)  ((((r) & 0xF8) << 8) | (((g) & 0xFC) << 3) | (((b) & 0xF8) >> 3))
+#endif
+
+/*
+ * MADCTL bits
+ */
+#define MADCTL_MH   0b00000100
+#define MADCTL_RGB  0b00001000
+#define MADCTL_ML   0b00010000
+#define MADCTL_MV   0b00100000
+#define MADCTL_MX   0b01000000
+#define MADCTL_MY   0b10000000
+
+/*
+ * Display rotation
+ */
+#define ROTATE 1
+
+#if ROTATE == 1
+#define DISPX  1
+#define DISPY  26
+#define DISPW  160
+#define DISPH  80
+#else
+#define DISPX  26
+#define DISPY  1
+#define DISPW  80
+#define DISPH  160
+#endif
+
+#define RDDPM      0x0A
+#define RDDMADCTL  0x0B
+#define RDDCOLMOD  0x0C
+#define RDDIM      0x0D
+#define RDDSM      0x0E
+#define RDDSDR     0x0F
+#define RDID1      0xDA
+#define RDID2      0xDB
+#define RDID3      0xDC
+
+/*
+ * Helper macros
+ */
+#if COLMODE == COLMODE_18
+#define st7735_clearscr()  st7735_fillrgb(0, 0, DISPW, DISPH, 0, 0, 0)
+#else
+#define st7735_clearscr()  st7735_fillregion(0, 0, DISPW, DISPH, 0)
+#endif
+
+/*
+ * API
+ */
+void st7735_setregion(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
+void st7735_fillregion(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
+void st7735_fillrgb(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t r, uint8_t g, uint8_t b);
+void st7735_hardreset(void);
+void st7735_softreset(void);
+void st7735_sleepout(uint8_t out);
+void st7735_colormode(uint8_t mode);
+void st7735_disppower(uint8_t on);
+void st7735_invertmode(uint8_t on);
+void st7735_memaccess(uint8_t mode);
+void st7735_dispmode(uint8_t norm);
+void st7735_partarea(uint8_t psl, uint8_t pel);
+void st7735_scroll(uint8_t addr);
+void st7735_idlemode(uint8_t on);
+void st7735_init(void);
+uint32_t st7735_readreg(uint8_t reg, uint8_t bytes, uint8_t dummy);
+
+#endif /* ST7735_H */

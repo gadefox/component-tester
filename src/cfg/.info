@@ -1,0 +1,29 @@
+The following table shows the internal resistance in Ohm of the LGT8F328P ports at Vcc= 5V in comparison to the Atmega168/328.
+GPIO type \ status . . . . . . . . . . . . . . . . . .1 - HIGH (R Pin to VCC) . . . . . 0 - LOW (R Pin to GND)
+LGT8F328P Standard . . . . . . . . . . . . . . . .typ. 12 ¿. . . . . . . . . . . . . . . . . . . . typ. 10 ¿
+LGT8F328P High current . . . . . . . . . . . . .typ. 4,5 ¿ . . . . . . . . . . . . . . . . . . . typ. 3,7 ¿
+Atmega168/328. . . . . . . . . . . . . . . . . . . . typ. 25 ¿. . . . . . . . . . . . . . . . . . . . typ. 25 ¿
+
+---- ADC:
+conversion 15 ADC clock cycles.
+first conversion after the ADC is switched on (ADEN in ADCSRA) 50 ADC
+sample-and-hold 1.5 ADC clock cycles after the start of a normal conversion and 14.5 ADC clock cycles after the start of an first conversion.
+ 
+Detuing calibration flow:
+1. Setting VDS modular, VDS input source is set as analog powr (AVCC)
+2. Referance voltage of ADC is set as analog power (AVCC)
+3. ADCSRC[SPN] = 0, ADC read 4/5VDO channel, conversion result is record as PVAL
+4. ADCSRC[SPN] = 1, ADC read 4/5VDO channel, conversion result is record as NVAL
+5. Save (NVAL – PVAL) >>1 to OFRO register
+6. ADCSRC[SPN] = 1, ADC read 1/5VDO channel, conversion result is record as NVAL
+7. ADCSRC[SPN] =0, ADC read 1/5VDO channel, conversion result is record as PVAL
+8. Save (NVAL – PVAL) >>1 to OFR1 register
+9. Setting ADCSRC[OFEN]=1 to enable detuning compensation
+
+---- DAO as ADC:
+vraj? DAO ≈ A0 × 1.033 t.j. nasobit 0.968
+
+---- int. refs:
+1.024 V	1.030 V	+0.6 %
+2.048 V	2.036 V	−0.6 %
+4.096 V	4.082 V	−0.3 %
